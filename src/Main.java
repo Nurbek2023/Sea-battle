@@ -1,7 +1,6 @@
 import java.util.Scanner;
 import java.util.Random;
-import java.util.ArrayList;
-import java.io.File;
+
 public class Main {
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_BLUE = "\u001B[34m";
@@ -41,16 +40,25 @@ public class Main {
             int row = shotCoordinates.charAt(0) - 'A';
             int col = Integer.parseInt(shotCoordinates.substring(1)) - 1;
 
+            
+
 
 
             // Process the player's shot
             shots++;
             processShot(sea, row, col);
+            printSea(sea, false);
+
+            System.out.print("clean the screen ? yes/no: ");
+            String request = scanner.nextLine().toUpperCase();
+            if (request == "Yes"){
+                clearScreen();
+            }
 
             // Check if all ships are sunk
             if (areAllShipsSunk(sea)) {
                 gameOver = true;
-                clearScreen();
+                
                 System.out.println("Congratulations, " + playerName + "! You sunk all the ships in " + shots + " shots.");
 
 
@@ -184,15 +192,7 @@ public class Main {
             rowLabel++;
         }
     }
-    private static void showShips(int[][] sea) {
-        for (int i = 0; i < sea.length; i++) {
-            System.out.println();
-            for (int j = 0; j < sea[i].length; j++) {
-                System.out.print(" ");
-                System.out.print(" " + sea[i][j]);
-            }
-        }
-    }
+   
     private static void initializeSea(int[][] sea){
         for(int i = 0; i < sea.length; i++){
             for(int j = 0; j<sea[i].length; j++){
@@ -230,8 +230,8 @@ public class Main {
     }
 
     private static boolean isValidPlace(int[][] sea, int startRow, int startCol, int shipSize, boolean isHorizontally) {
-        int seaRows = sea.length;
-        int seaCols = sea[0].length;
+        // int seaRows = sea.length;
+        // int seaCols = sea[0].length;
         if (isHorizontally) {
             int newStartRow = startRow - 1;
             int newStartCol = startCol - 1;
